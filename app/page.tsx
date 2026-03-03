@@ -1,7 +1,8 @@
-"use client";
+import AMVElektroservisPreview from "./Amv-elektroservis-b2b-preview";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+export default function Page() {
+  return <AMVElektroservisPreview />;
+}
 
 /*
 =====================================================
