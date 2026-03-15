@@ -1,8 +1,7 @@
-import AMVElektroservisPreview from "./Amv-elektroservis-b2b-preview";
+import AMVElektroservisPreview from "../Amv-elektroservis-b2b-preview";
 
-export default function Page() {
+export default function Home() 
   return <AMVElektroservisPreview />;
-}
 
 /*
 =====================================================
