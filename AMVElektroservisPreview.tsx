@@ -1,3 +1,7 @@
+"use client";
+
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 const galleryImages: string[] = [
   "/images/IMG_20231130_124447.jpg",
   "/images/IMG_20250902_134544.jpg",
