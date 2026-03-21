@@ -4,12 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const galleryImages: string[] = [
-  "/images/IMG_20231130_124447.jpg",
-  "/images/IMG_20250902_134544.jpg",
-  "/images/IMG_20250902_154617.jpg",
-  "/images/IMG_20251024_124955.jpg",
-  "/images/IMG_20251024_125019.jpg",
-  "/images/IMG-20251011-WA0002.jpg",
+
   "https://5.imimg.com/data5/SELLER/Default/2026/2/583195739/ZR/ZN/QX/1605358/delta-electronics-ac-servo-motors-drives-asda-series-a2-b2-b3-ecma-motors.jpg",
   "https://filecenter.deltaww.com/products/Images/2401/202401031636004954001.jpg?w=700",
   "https://ik.imagekit.io/4gajff5ct/IAS%20automation/collage%20delta-18.png?updatedAt=1729616807347"
