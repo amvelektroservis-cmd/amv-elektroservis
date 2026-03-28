@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// ✅ sem napíš cesty k svojim obrázkom
 const galleryImages: string[] = [
   "/images/1.jpg",
   "/images/2.jpg",
@@ -10,21 +11,39 @@ const galleryImages: string[] = [
   "/images/4.jpg",
   "/images/5.jpg",
   "/images/6.jpg",
-  "https://5.imimg.com/data5/SELLER/Default/2026/2/583195739/ZR/ZN/QX/1605358/delta-electronics-ac-servo-motors-drives-asda-series-a2-b2-b3-ecma-motors.jpg",
-  "https://filecenter.deltaww.com/products/Images/2401/202401031636004954001.jpg?w=700",
-  "https://ik.imagekit.io/4gajff5ct/IAS%20automation/collage%20delta-18.png?updatedAt=1729616807347",
+  "/images/7.jpg",
+  "/images/8.jpg",
+  "/images/9.jpg",
+  "/images/10.jpg",
 ];
 
 export default function AMVElektroservisPreview() {
+  // 👉 tu sú všetky stavy
   const [activeSection, setActiveSection] = useState("O nás");
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
+  // 👉 pridáme podporu pre klávesy (šípky a ESC)
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedImage(null);
+      if (e.key === "ArrowRight" && selectedImage !== null)
+        setSelectedImage((selectedImage + 1) % galleryImages.length);
+      if (e.key === "ArrowLeft" && selectedImage !== null)
+        setSelectedImage(
+          (selectedImage - 1 + galleryImages.length) % galleryImages.length
+        );
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [selectedImage]);
+
+  // 👉 tu sú sekcie stránky
   const sections: Record<string, React.ReactNode> = {
     "O nás": (
       <p>
         Profesionálny servis CNC zariadení Hyundai WIA, automatizácia starších strojov,
-        servopohonov a priemyselné elektro riešenia.
-        Servisujeme riadiace systémy FANUC, SIEMENS a HEIDENHAIN.
-        Pre automatizáciu používame systém DELTA.
+        servopohonov a priemyselné elektro riešenia. Servisujeme riadiace systémy
+        FANUC, SIEMENS a HEIDENHAIN. Pre automatizáciu používame systém DELTA.
       </p>
     ),
 
@@ -51,91 +70,121 @@ export default function AMVElektroservisPreview() {
             Individuálne nacenenie podľa rozsahu a náročnosti zariadenia
           </p>
         </div>
-        <div className="pt-2 border-t border-gray-800">
-          <p className="text-gray-300">
-            Individuálne cenové ponuky podľa rozsahu projektu.
-          </p>
-        </div>
       </div>
     ),
 
+    // 🖼️ NOVÁ GALÉRIA
     "Galéria": (
-      <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] h-[80vh] overflow-y-auto snap-y snap-mandatory scroll-smooth bg-black [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-        <div className="flex flex-col">
+      <div className="py-10">
+        {/* mriežka obrázkov */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
           {galleryImages.map((src, index) => (
-            <div
+            <motion.div
               key={index}
-              className="h-[80vh] w-full snap-start flex items-center justify-center bg-black"
+              whileHover={{ scale: 1.03 }}
+              className="cursor-pointer overflow-hidden rounded-lg"
+              onClick={() => setSelectedImage(index)}
             >
               <img
                 src={src}
                 alt={`Galéria ${index + 1}`}
-                className="max-h-[75vh] w-auto max-w-full object-contain"
+                className="w-full h-64 object-cover rounded-lg transition-transform duration-300 hover:scale-105"
                 loading="lazy"
               />
-            </div>
+            </motion.div>
           ))}
         </div>
+
+        {/* fullscreen náhľad */}
+        <AnimatePresence>
+          {selectedImage !== null && (
+            <motion.div
+              className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedImage(null)}
+            >
+              {/* zavrieť */}
+              <button
+                className="absolute top-6 right-8 text-gray-300 text-3xl hover:text-cyan-400"
+                onClick={() => setSelectedImage(null)}
+              >
+                ✕
+              </button>
+
+              {/* šípka doľava */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImage(
+                    (selectedImage! - 1 + galleryImages.length) %
+                      galleryImages.length
+                  );
+                }}
+                className="absolute left-6 text-white text-5xl font-bold hover:text-cyan-400 select-none"
+              >
+                ‹
+              </button>
+
+              {/* samotný obrázok s fade-in/out */}
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={galleryImages[selectedImage!]}
+                  src={galleryImages[selectedImage!]}
+                  alt="Zväčšený obrázok"
+                  className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-lg select-none"
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.4 }}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </AnimatePresence>
+
+              {/* šípka doprava */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImage(
+                    (selectedImage! + 1) % galleryImages.length
+                  );
+                }}
+                className="absolute right-6 text-white text-5xl font-bold hover:text-cyan-400 select-none"
+              >
+                ›
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     ),
 
     "Kontakt": (
       <div className="space-y-6 text-lg">
-        <div>
-          <p className="text-cyan-400 font-semibold">Email</p>
-          <p className="text-gray-300">amv.elektroservis@gmail.com</p>
-        </div>
-
-        <div>
-          <p className="text-cyan-400 font-semibold">Telefón</p>
-          <div className="space-y-2 text-gray-300">
-            <p>+421 948 016 065</p>
-            <p>+421 944 731 907</p>
-            <p>+421 944 386 374</p>
-          </div>
-        </div>
-
-        <div className="pt-4 border-t border-gray-800 text-gray-400 text-base">
-          Ak sa nám momentálne nedovoláte alebo sme obsadení, určite Vám
-          zavoláme späť. Môžeme byť práve v teréne alebo na servisnom zásahu.
-          Ďakujeme za pochopenie.
-        </div>
+        <p className="text-cyan-400 font-semibold">Email</p>
+        <p className="text-gray-300">amv.elektroservis@gmail.com</p>
       </div>
-    )
+    ),
   };
 
+  // 📱 zvyšok tvojej stránky (header, navigácia, atď.) môžeš nechať rovnaký ako predtým
   return (
     <div className="min-h-screen flex flex-col bg-black text-white overflow-x-hidden">
-      {/* Glow Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10 blur-3xl pointer-events-none" />
-
-      {/* HERO */}
       <section className="relative h-[55vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80')"
-          }}
-        />
         <div className="absolute inset-0 bg-black/70" />
-
         <div className="relative z-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-6xl font-extrabold tracking-widest text-cyan-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.9)] mb-8"
-          >
+          <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 mb-8">
             AMV ELEKTROSERVIS
-          </motion.h1>
+          </h1>
           <p className="max-w-2xl mx-auto text-lg text-gray-300">
             CNC servis • Automatizácia • Priemyselné elektro riešenia
           </p>
         </div>
       </section>
 
-      {/* Navigation */}
+      {/* Navigácia */}
       <div className="relative flex justify-center gap-6 py-6 border-b border-gray-800 bg-black/80 backdrop-blur sticky top-0 z-20">
         {Object.keys(sections).map((section) => (
           <button
@@ -152,7 +201,7 @@ export default function AMVElektroservisPreview() {
         ))}
       </div>
 
-      {/* Animated Section */}
+      {/* Obsah sekcie */}
       <AnimatePresence mode="wait">
         <motion.section
           key={activeSection}
@@ -171,8 +220,8 @@ export default function AMVElektroservisPreview() {
         </motion.section>
       </AnimatePresence>
 
-      <footer className="relative text-center p-4 border-t border-gray-800 bg-black text-gray-600">
-        © 2026 AMV-elektroservis
+      <footer className="text-center p-4 border-t border-gray-800 text-gray-600">
+        © 2026 AMV‑elektroservis
       </footer>
     </div>
   );
