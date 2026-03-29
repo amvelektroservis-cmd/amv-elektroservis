@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ✅ sem napíš cesty k svojim obrázkom
 const galleryImages: string[] = [
   "/images/1.jpg",
   "/images/2.jpg",
@@ -18,11 +17,9 @@ const galleryImages: string[] = [
 ];
 
 export default function AMVElektroservisPreview() {
-  // 👉 tu sú všetky stavy
   const [activeSection, setActiveSection] = useState("O nás");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
-  // 👉 pridáme podporu pre klávesy (šípky a ESC)
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelectedImage(null);
@@ -37,13 +34,16 @@ export default function AMVElektroservisPreview() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [selectedImage]);
 
-  // 👉 tu sú sekcie stránky
+  // 🔹 Nové technické pozadie pre header
+  const headerBg =
+    "url('/images/tech-background.jpg')"; // ← sem ulož tvoj obrázok do /public/images/
+
   const sections: Record<string, React.ReactNode> = {
     "O nás": (
       <p>
-        Profesionálny servis CNC zariadení Hyundai WIA, automatizácia starších strojov,
-        servopohonov a priemyselné elektro riešenia. Servisujeme riadiace systémy
-        FANUC, SIEMENS a HEIDENHAIN. Pre automatizáciu používame systém DELTA.
+        Profesionálny servis CNC zariadení Hyundai WIA, automatizácia starších
+        strojov, servopohonov a priemyselné elektro riešenia. Servisujeme riadiace
+        systémy FANUC, SIEMENS a HEIDENHAIN. Pre automatizáciu používame systém DELTA.
       </p>
     ),
 
@@ -56,27 +56,8 @@ export default function AMVElektroservisPreview() {
       </ul>
     ),
 
-    "Cenník": (
-      <div className="space-y-4">
-        <div>
-          <p className="text-2xl font-semibold text-cyan-400">40 € / hodina</p>
-          <p className="text-gray-400 text-sm">
-            Servisné práce a technické zásahy (jeden servisný technik)
-          </p>
-        </div>
-        <div>
-          <p className="text-xl font-semibold text-cyan-300">Diagnostika</p>
-          <p className="text-gray-400 text-sm">
-            Individuálne nacenenie podľa rozsahu a náročnosti zariadenia
-          </p>
-        </div>
-      </div>
-    ),
-
-    // 🖼️ NOVÁ GALÉRIA
     "Galéria": (
       <div className="py-10">
-        {/* mriežka obrázkov */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
           {galleryImages.map((src, index) => (
             <motion.div
@@ -95,7 +76,6 @@ export default function AMVElektroservisPreview() {
           ))}
         </div>
 
-        {/* fullscreen náhľad */}
         <AnimatePresence>
           {selectedImage !== null && (
             <motion.div
@@ -105,7 +85,6 @@ export default function AMVElektroservisPreview() {
               exit={{ opacity: 0 }}
               onClick={() => setSelectedImage(null)}
             >
-              {/* zavrieť */}
               <button
                 className="absolute top-6 right-8 text-gray-300 text-3xl hover:text-cyan-400"
                 onClick={() => setSelectedImage(null)}
@@ -113,7 +92,6 @@ export default function AMVElektroservisPreview() {
                 ✕
               </button>
 
-              {/* šípka doľava */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -127,7 +105,6 @@ export default function AMVElektroservisPreview() {
                 ‹
               </button>
 
-              {/* samotný obrázok s fade-in/out */}
               <AnimatePresence mode="wait">
                 <motion.img
                   key={galleryImages[selectedImage!]}
@@ -142,7 +119,6 @@ export default function AMVElektroservisPreview() {
                 />
               </AnimatePresence>
 
-              {/* šípka doprava */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -168,12 +144,16 @@ export default function AMVElektroservisPreview() {
     ),
   };
 
-  // 📱 zvyšok tvojej stránky (header, navigácia, atď.) môžeš nechať rovnaký ako predtým
   return (
     <div className="min-h-screen flex flex-col bg-black text-white overflow-x-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10 blur-3xl pointer-events-none" />
-      <section className="relative h-[55vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden">
-        <div className="absolute inset-0 bg-black/70" />
+
+      {/* 🔹 Upravena sekcia s technickým pozadím */}
+      <section
+        className="relative h-[55vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: headerBg }}
+      >
+        <div className="absolute inset-0 bg-black/70" /> {/* tmavý overlay */}
         <div className="relative z-10">
           <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 mb-8">
             AMV ELEKTROSERVIS
@@ -184,7 +164,7 @@ export default function AMVElektroservisPreview() {
         </div>
       </section>
 
-      {/* Navigácia */}
+      {/* navigácia, obsah, footer ostáva */}
       <div className="relative flex justify-center gap-6 py-6 border-b border-gray-800 bg-black/80 backdrop-blur sticky top-0 z-20">
         {Object.keys(sections).map((section) => (
           <button
@@ -192,8 +172,8 @@ export default function AMVElektroservisPreview() {
             onClick={() => setActiveSection(section)}
             className={`px-4 py-2 text-sm font-semibold tracking-wide transition-all duration-300 border-b-2 ${
               activeSection === section
-                ? "border-cyan-400 text-cyan-400"
-                : "border-transparent text-gray-500 hover:text-white"
+                ? 'border-cyan-400 text-cyan-400'
+                : 'border-transparent text-gray-500 hover:text-white'
             }`}
           >
             {section}
@@ -201,7 +181,6 @@ export default function AMVElektroservisPreview() {
         ))}
       </div>
 
-      {/* Obsah sekcie */}
       <AnimatePresence mode="wait">
         <motion.section
           key={activeSection}
@@ -211,12 +190,8 @@ export default function AMVElektroservisPreview() {
           transition={{ duration: 0.4 }}
           className="relative py-12 px-6 max-w-4xl mx-auto text-center flex-1"
         >
-          <h2 className="text-3xl font-bold mb-6 text-cyan-400">
-            {activeSection}
-          </h2>
-          <div className="text-lg text-gray-300">
-            {sections[activeSection]}
-          </div>
+          <h2 className="text-3xl font-bold mb-6 text-cyan-400">{activeSection}</h2>
+          <div className="text-lg text-gray-300">{sections[activeSection]}</div>
         </motion.section>
       </AnimatePresence>
 
