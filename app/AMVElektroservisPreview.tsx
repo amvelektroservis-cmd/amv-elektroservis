@@ -34,10 +34,6 @@ export default function AMVElektroservisPreview() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [selectedImage]);
 
-  // 🔹 Nové technické pozadie pre header
-  const headerBg =
-    "url('/images/tech-background.jpg')"; // ← sem ulož tvoj obrázok do /public/images/
-
   const sections: Record<string, React.ReactNode> = {
     "O nás": (
       <p>
@@ -56,7 +52,7 @@ export default function AMVElektroservisPreview() {
       </ul>
     ),
 
- "Cenník": (
+    "Cenník": (
       <div className="space-y-4">
         <div>
           <p className="text-2xl font-semibold text-cyan-400">40 € / hodina</p>
@@ -77,7 +73,7 @@ export default function AMVElektroservisPreview() {
         </div>
       </div>
     ),
-    
+
     "Galéria": (
       <div className="py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
@@ -118,8 +114,7 @@ export default function AMVElektroservisPreview() {
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedImage(
-                    (selectedImage! - 1 + galleryImages.length) %
-                      galleryImages.length
+                    (selectedImage! - 1 + galleryImages.length) % galleryImages.length
                   );
                 }}
                 className="absolute left-6 text-white text-5xl font-bold hover:text-cyan-400 select-none"
@@ -158,26 +153,51 @@ export default function AMVElektroservisPreview() {
       </div>
     ),
 
-    "Kontakt": (
-      <div className="space-y-6 text-lg">
-        <p className="text-cyan-400 font-semibold">Email</p>
-        <p className="text-gray-300">amv.elektroservis@gmail.com</p>
-      </div>
-    ),
+  "Kontakt": (
+  <div className="space-y-6 text-lg">
+    <div>
+      <p className="text-cyan-400 font-semibold">Email</p>
+      <p className="text-gray-300">amv.elektroservis@gmail.com</p>
+    </div>
+    <div>
+      <p className="text-cyan-400 font-semibold">Telefónne čísla</p>
+      <p className="text-gray-300">
+        +421 948 016 065<br />
+        +421 944 731 907<br />
+        +421 944 386 374
+      </p>
+    </div>
+    <p className="text-gray-400 text-sm max-w-lg">
+     Ak sa nám momentálne nedovoláte, pravdepodobne sa nachádzame na servisnom zásahu.
+     Vašej požiadavke sa budeme venovať hneď, ako to bude možné, a budeme vás spätne kontaktovať.
+    </p>
+  </div>
+),
+
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-black text-white overflow-x-hidden relative">
+      {/* ✅ Pôvodné technické animované pozadie (mriežka) */}
+      <motion.div
+        animate={{ backgroundPosition: ["0px 0px", "60px 60px"] }}
+        transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+        className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(0,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.2)_1px,transparent_1px)] bg-[size:60px_60px]"
+      />
+
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10 blur-3xl pointer-events-none" />
 
-      {/* 🔹 Upravena sekcia s technickým pozadím */}
+      {/* HERO */}
       <section
         className="relative h-[55vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: headerBg }}
+        style={{
+          backgroundImage:
+            "url('/images/tech-background.jpg')" // tvoje statické technické pozadie (ak chceš, môžeš dať iné)
+        }}
       >
-        <div className="absolute inset-0 bg-black/70" /> {/* tmavý overlay */}
+        <div className="absolute inset-0 bg-black/70" />
         <div className="relative z-10">
-          <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 mb-8">
+          <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.9)] mb-8">
             AMV ELEKTROSERVIS
           </h1>
           <p className="max-w-2xl mx-auto text-lg text-gray-300">
@@ -186,7 +206,7 @@ export default function AMVElektroservisPreview() {
         </div>
       </section>
 
-      {/* navigácia, obsah, footer ostáva */}
+      {/* Navigácia */}
       <div className="relative flex justify-center gap-6 py-6 border-b border-gray-800 bg-black/80 backdrop-blur sticky top-0 z-20">
         {Object.keys(sections).map((section) => (
           <button
@@ -194,8 +214,8 @@ export default function AMVElektroservisPreview() {
             onClick={() => setActiveSection(section)}
             className={`px-4 py-2 text-sm font-semibold tracking-wide transition-all duration-300 border-b-2 ${
               activeSection === section
-                ? 'border-cyan-400 text-cyan-400'
-                : 'border-transparent text-gray-500 hover:text-white'
+                ? "border-cyan-400 text-cyan-400"
+                : "border-transparent text-gray-500 hover:text-white"
             }`}
           >
             {section}
@@ -203,6 +223,7 @@ export default function AMVElektroservisPreview() {
         ))}
       </div>
 
+      {/* Sekcie */}
       <AnimatePresence mode="wait">
         <motion.section
           key={activeSection}
