@@ -56,6 +56,28 @@ export default function AMVElektroservisPreview() {
       </ul>
     ),
 
+ "Cenník": (
+      <div className="space-y-4">
+        <div>
+          <p className="text-2xl font-semibold text-cyan-400">40 € / hodina</p>
+          <p className="text-gray-400 text-sm">
+            Servisné práce a technické zásahy (jeden servisný technik)
+          </p>
+        </div>
+        <div>
+          <p className="text-xl font-semibold text-cyan-300">Diagnostika</p>
+          <p className="text-gray-400 text-sm">
+            Individuálne nacenenie podľa rozsahu a náročnosti zariadenia
+          </p>
+        </div>
+        <div className="pt-2 border-t border-gray-800">
+          <p className="text-gray-300">
+            Individuálne cenové ponuky podľa rozsahu projektu.
+          </p>
+        </div>
+      </div>
+    ),
+    
     "Galéria": (
       <div className="py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
