@@ -187,24 +187,38 @@ export default function AMVElektroservisPreview() {
 
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10 blur-3xl pointer-events-none" />
 
-      {/* HERO */}
-      <section
-        className="relative h-[55vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('/images/tech-background.jpg')" // tvoje statické technické pozadie (ak chceš, môžeš dať iné)
-        }}
-      >
-        <div className="absolute inset-0 bg-black/70" />
-        <div className="relative z-10">
-          <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.9)] mb-8">
-            AMV ELEKTROSERVIS
-          </h1>
-          <p className="max-w-2xl mx-auto text-lg text-gray-300">
-            CNC servis • Automatizácia • Priemyselné elektro riešenia
-          </p>
-        </div>
-      </section>
+{/* HERO */}
+<section className="relative h-[60vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden">
+
+  {/* Background image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{
+      backgroundImage: "url('/images/tech-background.jpg')"
+    }}
+  />
+
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/75" />
+
+  {/* Side fade */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-90" />
+
+  {/* Jemná technická mriežka */}
+  <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(0,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.2)_1px,transparent_1px)] bg-[size:80px_80px]" />
+
+  {/* Content */}
+  <div className="relative z-10">
+    <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.9)] mb-8">
+      AMV ELEKTROSERVIS
+    </h1>
+
+    <p className="max-w-2xl mx-auto text-lg text-gray-300">
+      CNC servis • Automatizácia • Priemyselné elektro riešenia
+    </p>
+  </div>
+
+</section>
 
       {/* Navigácia */}
       <div className="relative flex justify-center gap-6 py-6 border-b border-gray-800 bg-black/80 backdrop-blur sticky top-0 z-20">
