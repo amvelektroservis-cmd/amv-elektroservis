@@ -190,22 +190,25 @@ export default function AMVElektroservisPreview() {
 {/* HERO */}
 <section className="relative h-[60vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden">
 
-  {/* Background image */}
+  {/* obraz */}
   <div
-    className="absolute inset-0 bg-cover bg-center"
+    className="absolute inset-0 bg-cover bg-center scale-105"
     style={{
       backgroundImage: "url('/images/tech-background.jpg')"
     }}
   />
 
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-black/75" />
+  {/* tmavý overlay */}
+  <div className="absolute inset-0 bg-black/70" />
 
-  {/* Side fade */}
-  <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-90" />
+  {/* fade do strán */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
 
-  {/* Jemná technická mriežka */}
-  <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(0,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.2)_1px,transparent_1px)] bg-[size:80px_80px]" />
+  {/* jemný blur efekt do strán */}
+  <div className="absolute inset-0 backdrop-blur-[2px]" />
+
+  {/* text */}
+  <div className="relative z-10"></div>
 
   {/* Content */}
   <div className="relative z-10">
