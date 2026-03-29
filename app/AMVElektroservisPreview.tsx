@@ -242,14 +242,17 @@ export default function AMVElektroservisPreview() {
 
       {/* Sekcie */}
       <AnimatePresence mode="wait">
-        <motion.section
-          key={activeSection}
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -40 }}
-          transition={{ duration: 0.4 }}
-          className="relative py-12 px-6 max-w-4xl mx-auto text-center flex-1"
-        >
+<motion.section
+  key={activeSection}
+  initial={{ opacity: 0, x: 40 }}
+  animate={{ opacity: 1, x: 0 }}
+  exit={{ opacity: 0, x: -40 }}
+  transition={{ duration: 0.4 }}
+  className={`relative py-12 px-6 max-w-4xl mx-auto text-center flex-1 ${
+    activeSection === "Galéria" ? "overflow-y-auto" : "overflow-hidden"
+  }`}
+>
+
           <h2 className="text-3xl font-bold mb-6 text-cyan-400">{activeSection}</h2>
           <div className="text-lg text-gray-300">{sections[activeSection]}</div>
         </motion.section>
