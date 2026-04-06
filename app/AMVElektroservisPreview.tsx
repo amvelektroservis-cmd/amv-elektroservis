@@ -74,84 +74,84 @@ export default function AMVElektroservisPreview() {
       </div>
     ),
 
-    "Galéria": (
-      <div className="py-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
-          {galleryImages.map((src, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.03 }}
-              className="cursor-pointer overflow-hidden rounded-lg"
-              onClick={() => setSelectedImage(index)}
-            >
-              <img
-                src={src}
-                alt={`Galéria ${index + 1}`}
-                className="w-full h-64 object-cover rounded-lg transition-transform duration-300 hover:scale-105"
-                loading="lazy"
-              />
-            </motion.div>
-          ))}
-        </div>
+"Galéria": (
+  <div className="py-10 h-[60vh] overflow-y-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
+      {galleryImages.map((src, index) => (
+        <motion.div
+          key={index}
+          whileHover={{ scale: 1.03 }}
+          className="cursor-pointer overflow-hidden rounded-lg"
+          onClick={() => setSelectedImage(index)}
+        >
+          <img
+            src={src}
+            alt={`Galéria ${index + 1}`}
+            className="w-full h-64 object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+            loading="lazy"
+          />
+        </motion.div>
+      ))}
+    </div>
 
-        <AnimatePresence>
-          {selectedImage !== null && (
-            <motion.div
-              className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedImage(null)}
-            >
-              <button
-                className="absolute top-6 right-8 text-gray-300 text-3xl hover:text-cyan-400"
-                onClick={() => setSelectedImage(null)}
-              >
-                ✕
-              </button>
+    <AnimatePresence>
+      {selectedImage !== null && (
+        <motion.div
+          className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            className="absolute top-6 right-8 text-gray-300 text-3xl hover:text-cyan-400"
+            onClick={() => setSelectedImage(null)}
+          >
+            ✕
+          </button>
 
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedImage(
-                    (selectedImage! - 1 + galleryImages.length) % galleryImages.length
-                  );
-                }}
-                className="absolute left-6 text-white text-5xl font-bold hover:text-cyan-400 select-none"
-              >
-                ‹
-              </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImage(
+                (selectedImage! - 1 + galleryImages.length) % galleryImages.length
+              );
+            }}
+            className="absolute left-6 text-white text-5xl font-bold hover:text-cyan-400 select-none"
+          >
+            ‹
+          </button>
 
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={galleryImages[selectedImage!]}
-                  src={galleryImages[selectedImage!]}
-                  alt="Zväčšený obrázok"
-                  className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-lg select-none"
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.4 }}
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={galleryImages[selectedImage!]}
+              src={galleryImages[selectedImage!]}
+              alt="Zväčšený obrázok"
+              className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-lg select-none"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.4 }}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </AnimatePresence>
 
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedImage(
-                    (selectedImage! + 1) % galleryImages.length
-                  );
-                }}
-                className="absolute right-6 text-white text-5xl font-bold hover:text-cyan-400 select-none"
-              >
-                ›
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    ),
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImage(
+                (selectedImage! + 1) % galleryImages.length
+              );
+            }}
+            className="absolute right-6 text-white text-5xl font-bold hover:text-cyan-400 select-none"
+          >
+            ›
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+),
 
   "Kontakt": (
   <div className="space-y-6 text-lg">
@@ -188,31 +188,22 @@ export default function AMVElektroservisPreview() {
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10 blur-3xl pointer-events-none" />
 
 {/* HERO */}
-<section className="relative h-[60vh] flex items-start justify-center text-center px-6 pt-20 overflow-hidden">
+<section className="relative h-[50vh] flex items-center justify-center text-center px-6 overflow-hidden">
 
-  {/* obraz */}
   <div
-    className="absolute inset-0 bg-cover bg-center scale-105"
+    className="absolute inset-0 bg-cover bg-center"
     style={{
       backgroundImage: "url('/images/tech-background.jpg')"
     }}
   />
 
-  {/* tmavý overlay */}
-  <div className="absolute inset-0 bg-black/70" />
+  <div className="absolute inset-0 bg-black/75" />
 
-  {/* fade do strán */}
   <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
 
-  {/* jemný blur efekt do strán */}
-  <div className="absolute inset-0 backdrop-blur-[2px]" />
-
-  {/* text */}
-  <div className="relative z-10"></div>
-
-  {/* Content */}
+  {/* TEXT */}
   <div className="relative z-10">
-    <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.9)] mb-8">
+    <h1 className="text-6xl font-extrabold tracking-widest text-cyan-400 drop-shadow-[0_0_25px_rgba(34,211,238,0.9)] mb-6">
       AMV ELEKTROSERVIS
     </h1>
 
@@ -248,7 +239,7 @@ export default function AMVElektroservisPreview() {
   animate={{ opacity: 1, x: 0 }}
   exit={{ opacity: 0, x: -40 }}
   transition={{ duration: 0.4 }}
-  className={`relative py-12 px-6 max-w-4xl mx-auto text-center flex-1 ${
+  className={`relative py-8 px-6 max-w-4xl mx-auto text-center ${
     activeSection === "Galéria" ? "overflow-y-auto" : "overflow-hidden"
   }`}
 >
