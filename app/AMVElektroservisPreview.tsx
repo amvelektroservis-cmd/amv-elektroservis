@@ -154,8 +154,8 @@ export default function AMVElektroservisPreview() {
 ),
 
   "Kontakt": (
-  <div className="space-y-6 text-lg mt-[-2rem]">
-   <div>
+  <div className="space-y-5 text-lg mt-[-3rem] mb-[-1rem]">
+    <div>
       <p className="text-cyan-400 font-semibold">Email</p>
       <p className="text-gray-300">amv.elektroservis@gmail.com</p>
     </div>
@@ -168,8 +168,8 @@ export default function AMVElektroservisPreview() {
       </p>
     </div>
     <p className="text-gray-400 text-sm max-w-lg">
-     Ak sa nám momentálne nedovoláte, pravdepodobne sa nachádzame na servisnom zásahu.
-     Vašej požiadavke sa budeme venovať hneď, ako to bude možné, a budeme vás spätne kontaktovať.
+     Ak sa nám momentálne nedovoláte, pravdepodobne sa nachádzame v teréne na servisnom zásahu.
+     Vašej požiadavke sa budeme venovať hneď, ako to bude možné a budeme vás spätne kontaktovať.
     </p>
   </div>
 ),
