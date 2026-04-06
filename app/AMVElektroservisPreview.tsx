@@ -190,16 +190,22 @@ export default function AMVElektroservisPreview() {
 {/* HERO */}
 <section className="relative h-[50vh] flex items-center justify-center text-center px-6 overflow-hidden">
 
+  {/* Nové pozadie s CNC iskrami */}
   <div
     className="absolute inset-0 bg-cover bg-center"
     style={{
-      backgroundImage: "url('/images/tech-background.jpg')"
+      backgroundImage: "url('/images/cnc-sparks.jpg')" // <- sem vlož tretí obrázok
     }}
   />
 
-  <div className="absolute inset-0 bg-black/75" />
+  {/* Tmavý overlay s gradientom */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
+  
+  {/* Jemný blur effect v strednej časti */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/70" />
 
-  <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black" />
+  {/* Tech svetelné efekty */}
+  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-orange-400/10 blur-3xl" />
 
   {/* TEXT */}
   <div className="relative z-10">
@@ -207,12 +213,13 @@ export default function AMVElektroservisPreview() {
       AMV ELEKTROSERVIS
     </h1>
 
-    <p className="max-w-2xl mx-auto text-lg text-gray-300">
+    <p className="max-w-2xl mx-auto text-lg text-gray-300 drop-shadow-lg">
       CNC servis • Automatizácia • Priemyselné elektro riešenia
     </p>
   </div>
 
 </section>
+
 
       {/* Navigácia */}
       <div className="relative flex justify-center gap-6 py-6 border-b border-gray-800 bg-black/80 backdrop-blur sticky top-0 z-20">
