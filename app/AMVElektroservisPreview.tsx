@@ -75,7 +75,7 @@ export default function AMVElektroservisPreview() {
     ),
 
 "Galéria": (
-  <div className="py-10 h-[60vh] overflow-y-auto">
+  <div className="py-10">
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
       {galleryImages.map((src, index) => (
         <motion.div
@@ -154,8 +154,8 @@ export default function AMVElektroservisPreview() {
 ),
 
   "Kontakt": (
-  <div className="space-y-6 text-lg">
-    <div>
+  <div className="space-y-6 text-lg mt-[-2rem]">
+   <div>
       <p className="text-cyan-400 font-semibold">Email</p>
       <p className="text-gray-300">amv.elektroservis@gmail.com</p>
     </div>
@@ -239,11 +239,8 @@ export default function AMVElektroservisPreview() {
   animate={{ opacity: 1, x: 0 }}
   exit={{ opacity: 0, x: -40 }}
   transition={{ duration: 0.4 }}
-  className={`relative py-8 px-6 max-w-4xl mx-auto text-center ${
-    activeSection === "Galéria" ? "overflow-y-auto" : "overflow-hidden"
-  }`}
+  className="relative py-8 px-6 max-w-4xl mx-auto text-center"
 >
-
           <h2 className="text-3xl font-bold mb-6 text-cyan-400">{activeSection}</h2>
           <div className="text-lg text-gray-300">{sections[activeSection]}</div>
         </motion.section>
